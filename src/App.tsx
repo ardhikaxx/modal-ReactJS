@@ -1,23 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { CSSTransition } from 'react-transition-group';
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button onClick={toggleModal}>Show Modal</button>
+
+        <CSSTransition
+          in={showModal}
+          timeout={300}
+          classNames="modal"
+          unmountOnExit
         >
-          Learn React
-        </a>
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>Modal Title</h2>
+              <p>This is the modal content.</p>
+              <button onClick={toggleModal}>Close</button>
+            </div>
+          </div>
+        </CSSTransition>
       </header>
     </div>
   );
